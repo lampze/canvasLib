@@ -13,8 +13,21 @@ function animaStart(cvs, ctx) {
   var now=Date.now();
   var frameCount=0;
   var fps=0;
-  var FPS=new AnimaObj(cvs, ctx, "font", {txt:"FPS:"+fps,x:2,y:20}, {fillStyle:"#0f0",strokeStyle:"#0f0",font:"20px Verdana"},{draw: smartDraw});
-  var ball=new AnimaObj(cvs, ctx, "ball", {x:300,y:300,r:10,vx:2,vy:1,ax:1.001,ay:1.001}, {fillStyle:"#f00",strokeStyle:"#000"});
+  var FPS=new AnimaObj({
+    cvs: cvs,
+    ctx: ctx,
+    shape: "font",
+    posit: {txt:"FPS:"+fps,x:2,y:20},
+    style: {fillStyle:"#0f0",strokeStyle:"#0f0",font:"20px Verdana"},
+    hooks: {draw: smartDraw},
+  });
+  var ball=new AnimaObj({
+    cvs: cvs,
+    ctx: ctx,
+    shape: "arc",
+    posit: {x:300,y:300,r:10,vx:2,vy:1,ax:1.001,ay:1.001},
+    style: {fillStyle:"#f00",strokeStyle:"#000"},
+  });
 
   function iter(){
     clearCanvas(cvs);

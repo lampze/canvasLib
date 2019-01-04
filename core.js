@@ -1,14 +1,19 @@
-function AnimaObj(cvs ,ctx, shape, posit, style, hooks) {
-  this.cvs = cvs;
-  this.ctx = ctx;
-  this.posit = posit || {x:0,y:0};
-  this.shape = shape || "unknow";
-  this.style = style || {fillStyle:"#fff",strokeStyle:"#000"};
+// cvs ,ctx, shape, posit, style, hooks
+
+function AnimaObj(initObj) {
+  var obj = this;
+  this.posit = {x:0,y:0};
+  this.shape = "unknow";
+  this.style = {fillStyle:"#fff",strokeStyle:"#000"};
   this.creatTime = Date.now();
   
+  Object.keys(initObj).forEach(function(key){
+    obj[key]=initObj[key];
+  })
+
   this.aliveTime = function(){return Date.now() - this.creatTime;};
   this.getInfo = function(){return this.shape + ';alive:' + this.aliveTime() + 'ms;';};
-  this.hooks = hooks || {draw: smartDraw, move: smartMove, checkWall: checkWall, addSpeed: addSpeed};
+  this.hooks = {draw: smartDraw, move: smartMove, checkWall: checkWall, addSpeed: addSpeed};
   this.runHook = function() {
     var obj=this;
     Object.keys(obj.hooks).forEach(function(key){
@@ -17,7 +22,7 @@ function AnimaObj(cvs ,ctx, shape, posit, style, hooks) {
   }
   
   this.addHook = function(hook) {
-    obj = this;
+    var obj = this;
     switch(typeof(hook)) {
       case "object":
         if(isArray(hook)) {
@@ -43,7 +48,7 @@ function AnimaObj(cvs ,ctx, shape, posit, style, hooks) {
   }
   
   this.removeHook = function(hook) {
-    obj = this;
+    var obj = this;
     switch(typeof(hook)) {
       case "function":
         Object.keys(obj.hooks).forEach(function(key){
@@ -94,7 +99,7 @@ function smartDraw(obj) {
       obj.ctx.rect(obj.posit.x, obj.posit.y, obj.posit.width, obj.posit.height);
       obj.ctx.closePath();
       break;
-    case "ball":
+    case "arc":
       obj.ctx.beginPath();
       obj.ctx.arc(obj.posit.x, obj.posit.y, obj.posit.r, 0, 2*Math.PI);
       obj.ctx.closePath();
@@ -114,7 +119,7 @@ function checkWall(obj){
     return false;
   
   switch(obj.shape){
-    case "ball":
+    case "arc":
       if(obj.posit.x-obj.posit.r<=0){
         obj.posit.x=obj.posit.r;
         obj.posit.vx=-obj.posit.vx;
