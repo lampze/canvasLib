@@ -3,9 +3,19 @@
   <head>
     <meta charset="UTF-8"/>
     <title>Canvas test</title>
+    <style>
+     html,body {
+       height: 100%;
+       margin: 0;
+       overflow: hidden;
+     }
+     #canvas {
+       display: block;
+     }
+    </style>
   </head>
   <body>
-    <canvas id="canvas" style="border:1px solid;display:block;margin:50px auto;" width="600" height="600">
+    <canvas id="canvas">
       你的浏览器不支持canvas，请下个chrome：<a href="https://www.google.cn/chrome/">chrome</a>
     </canvas>
   </body>

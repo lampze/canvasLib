@@ -1,6 +1,14 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+window.onresize = function() {
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+}
+
 function animaStart(cvs, ctx) {
   var now=Date.now();
   var frameCount=0;
